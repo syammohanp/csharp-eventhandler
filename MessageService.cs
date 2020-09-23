@@ -15,5 +15,9 @@ namespace csharp_lambda
         {
             System.Console.WriteLine("Message Service OnVideoEncodedGeneric" + e.Video.Title);
         }
+
+        public void OnVideoEncodedCustom1(string Title) {
+            System.Console.WriteLine("Message Service OnVideoEncodedCustom" + Title);
+        }
     }
 }

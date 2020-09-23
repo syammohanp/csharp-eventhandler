@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
+using System.Runtime.InteropServices.ComTypes;
 using csharp_lambda;
 
 namespace csharp_lambda
@@ -11,6 +13,12 @@ namespace csharp_lambda
         {
            MathService mathServ = new MathService();
            mathServ.MathPerformed += OnMathPerformed;
+           mathServ.MathPerformed += delegate(object sernder, MathPerformedEventArgs e) {
+               Console.WriteLine("Calculation Result from inline delegate" + e.Result);
+           };
+            mathServ.MathPerformed += (sernder, e) => {
+               Console.WriteLine("Calculation Result from inline lambda" + e.Result);
+           };
            mathServ.MultiplyNumebrs(12.2,2.0);
 
            var video = new Video() { Title = "Video 1"};
@@ -20,7 +28,16 @@ namespace csharp_lambda
             videoEncoder.VideoEncoded += mailService.OnVideoEncoded;
             videoEncoder.VideoEncoded += messageService.OnVideoEncoded;
             videoEncoder.VidoeEncodedGeneric += messageService.OnVideoEncodedGeneric;
+            videoEncoder.VideoEncodedCustom += messageService.OnVideoEncodedCustom1;
             videoEncoder.Encode(video);
+
+            //Action and Func
+            var addition = new addition();
+            var convertToArray = new convertToArray();
+            addition.ConvertToDoubleArray += convertToArray.onConvertToDoubleArray;
+            string[] input = new string[]{"1","2","3","4","5"};
+            // Console.WriteLine("Main method calling GetFinalResult" + addition.GetFinalResult(input).ToString());
+            Console.WriteLine("Main method calling GetFinalResult" + addition.GetFinalResult(input, (val1) => val1.Where(i => i > 0).Sum()).ToString());
         }
 
         static void OnMathPerformed(object sender, MathPerformedEventArgs e) {
