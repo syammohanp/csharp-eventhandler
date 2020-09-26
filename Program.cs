@@ -37,7 +37,7 @@ namespace csharp_lambda
             addition.ConvertToDoubleArray += convertToArray.onConvertToDoubleArray;
             string[] input = new string[]{"1","2","3","4","5"};
             // Console.WriteLine("Main method calling GetFinalResult" + addition.GetFinalResult(input).ToString());
-            Console.WriteLine("Main method calling GetFinalResult" + addition.GetFinalResult(input, (val1) => val1.Where(i => i > 0).Sum()).ToString());
+            Console.WriteLine("Main method calling GetFinalResult" + addition.GetFinalResult(input, (val1) => val1.Where(i => true).Sum()).ToString());
         }
 
         static void OnMathPerformed(object sender, MathPerformedEventArgs e) {
